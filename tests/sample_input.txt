@@ -1,0 +1,9 @@
+SAP ID: 500123456
+Roll No: 25
+Name: Rahul Sharma
+Phone: 9876543210
+Email: rahul@gmail.com
+Year: 1
+Semester: 2
+SGPA Semester 1: 9.2
+SGPA Semester 2: 9.0

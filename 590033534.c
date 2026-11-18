@@ -287,6 +287,50 @@ void sortByName()
         displayStudent(&temp[i]);
     }
 }
+void academicAdvisor()
+{
+    long long id;
+
+    printf("\nEnter SAP ID for Academic Advice: ");
+    scanf("%lld", &id);
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        if (students[i].sapId == id)
+        {
+            float cgpa = calculateCGPA(&students[i]);
+
+            printf("\nStudent Name : %s", students[i].name);
+            printf("\nCGPA         : %.2f", cgpa);
+            printf("\nRecommendation: ");
+
+            if (cgpa >= 9.0)
+            {
+                printf("Excellent Performance - "
+                       "maintain your current study pattern.\n");
+            }
+            else if (cgpa >= 7.5)
+            {
+                printf("Good Performance - continue regular "
+                       "practice and strengthen weaker subjects.\n");
+            }
+            else if (cgpa >= 6.0)
+            {
+                printf("Needs Improvement - focus more on "
+                       "subjects with lower SGPA.\n");
+            }
+            else
+            {
+                printf("Requires Immediate Attention - revise "
+                       "fundamentals and seek academic support.\n");
+            }
+
+            return;
+        }
+    }
+
+    printf("\nStudent not found.\n");
+}
 int main()
 {
     int choice;
@@ -344,6 +388,9 @@ case 8:
     sortByName();
     break;
 
+    case 9:
+    academicAdvisor();
+    break;
         case 0:
             printf("\nProgram closed.\n");
             break;
