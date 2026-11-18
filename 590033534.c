@@ -166,7 +166,127 @@ void deleteStudent()
 
     printf("\nStudent not found.\n");
 }
+float calculateCGPA(Student *s)
+{
+    float total = 0;
+    int count = 0;
 
+    for (int i = 0; i < SEMESTERS; i++)
+    {
+        if (s->sgpa[i] > 0)
+        {
+            total = total + s->sgpa[i];
+            count++;
+        }
+    }
+
+    if (count == 0)
+        return 0;
+
+    return total / count;
+}
+void displayCGPA()
+{
+    if (studentCount == 0)
+    {
+        printf("\nNo students available.\n");
+        return;
+    }
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        printf("\nSAP ID: %lld", students[i].sapId);
+        printf("\nName: %s", students[i].name);
+        printf("\nCGPA: %.2f\n", calculateCGPA(&students[i]));
+    }
+}
+void yearWiseAverage()
+{
+    for (int year = 1; year <= 4; year++)
+    {
+        float total = 0;
+        int count = 0;
+
+        for (int i = 0; i < studentCount; i++)
+        {
+            if (students[i].year == year)
+            {
+                total += calculateCGPA(&students[i]);
+                count++;
+            }
+        }
+
+        if (count > 0)
+        {
+            printf("\nYear %d Average CGPA = %.2f",
+                   year, total / count);
+        }
+        else
+        {
+            printf("\nYear %d: No students", year);
+        }
+    }
+
+    printf("\n");
+}
+void sortBySAP()
+{
+    Student temp[MAX_STUDENTS];
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        temp[i] = students[i];
+    }
+
+    for (int i = 0; i < studentCount - 1; i++)
+    {
+        for (int j = 0; j < studentCount - i - 1; j++)
+        {
+            if (temp[j].sapId > temp[j + 1].sapId)
+            {
+                Student t = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = t;
+            }
+        }
+    }
+
+    printf("\nStudents sorted by SAP ID:\n");
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        displayStudent(&temp[i]);
+    }
+}
+void sortByName()
+{
+    Student temp[MAX_STUDENTS];
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        temp[i] = students[i];
+    }
+
+    for (int i = 0; i < studentCount - 1; i++)
+    {
+        for (int j = 0; j < studentCount - i - 1; j++)
+        {
+            if (strcmp(temp[j].name, temp[j + 1].name) > 0)
+            {
+                Student t = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = t;
+            }
+        }
+    }
+
+    printf("\nStudents sorted by Name:\n");
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        displayStudent(&temp[i]);
+    }
+}
 int main()
 {
     int choice;
@@ -208,6 +328,21 @@ int main()
         case 4:
             deleteStudent();
             break;
+            case 5:
+    displayCGPA();
+    break;
+
+case 6:
+    yearWiseAverage();
+    break;
+
+case 7:
+    sortBySAP();
+    break;
+
+case 8:
+    sortByName();
+    break;
 
         case 0:
             printf("\nProgram closed.\n");
